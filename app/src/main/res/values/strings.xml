@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Entrevoisins</string>
+    <string name="tab_neighbour_title">My neighbours</string>
+    <string name="tab_favorites_title">Favorites</string>
+    <string name="activity_new_neighbour">New neighbour</string>
+    <string name="username">Username</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="sign_in_button_text">SIGN IN</string>
+    <string name="main_activity_logo_desc">Main activity logo</string>
+    <string name="Line1">Line 1</string>
+    <string name="Line2">Line 2</string>
+    <string name="Username_default_name">USERNAME</string>
+    <string name="Username_default_position">SAINT PIERRE DU MONT A 5KM</string>
+    <string name="Username_default_phone_number">+33 6 12 17 42 52</string>
+    <string name="Username_default_socials">facebook.com/caroline</string>
+    <string name="About_me">About me</string>
+    <string name="facebook_url">facebook.com/%1$s</string>
+
+    <string name="Welcome_user">Welcome: %1$s</string>
+    <string name="LoremIpsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+        et dolore magna aliqua. Ut enim ad minim </string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>

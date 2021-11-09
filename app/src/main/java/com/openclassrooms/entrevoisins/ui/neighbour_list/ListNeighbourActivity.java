@@ -42,7 +42,6 @@ public class ListNeighbourActivity extends AppCompatActivity {
 
 
 
-
     }
 
     @OnClick(R.id.add_neighbour)

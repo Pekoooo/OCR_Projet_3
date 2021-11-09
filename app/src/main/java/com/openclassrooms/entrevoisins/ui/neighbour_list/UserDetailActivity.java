@@ -16,14 +16,28 @@ import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class UserDetailActivity extends AppCompatActivity {
 
+    @BindView(R.id.MainImageView)
+    public ImageView image;
+    @BindView(R.id.on_picture_name)
+    public TextView username1;
+    @BindView(R.id.info_frame_name)
+    public TextView username2;
+    @BindView(R.id.info_frame_position)
+    public TextView position;
+    @BindView(R.id.info_frame_cellphone)
+    public TextView cellphone;
+    @BindView(R.id.about_me_details)
+    public TextView aboutMe;
+    @BindView(R.id.info_frame_socials)
+    public TextView socials;
+    @BindView(R.id.fav_fab)
+    public FloatingActionButton FavBtn;
+
     private NeighbourApiService mApiService;
-
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,15 +64,7 @@ public class UserDetailActivity extends AppCompatActivity {
 
     private void setDetails(Neighbour neighbour){
 
-        ImageView image = findViewById(R.id.MainImageView);
-        TextView username1 = findViewById(R.id.on_picture_name);
-        TextView username2 = findViewById(R.id.info_frame_name);
-        TextView position = findViewById(R.id.info_frame_position);
-        TextView cellphone = findViewById(R.id.info_frame_cellphone);
-        TextView aboutMe = findViewById(R.id.about_me_details);
-        TextView socials = findViewById(R.id.info_frame_socials);
-        FloatingActionButton FavBtn = findViewById(R.id.fav_fab);
-
+        ButterKnife.bind(this);
 
         Glide.with(this)
                 .asBitmap()
@@ -70,6 +76,10 @@ public class UserDetailActivity extends AppCompatActivity {
         position.setText(neighbour.getAddress());
         cellphone.setText(neighbour.getPhoneNumber());
         aboutMe.setText(neighbour.getAboutMe());
+
+        //Sets social media link with a placeholder :
+        String UserSocials = getString(R.string.facebook_url, neighbour.getName());
+        socials.setText(UserSocials);
 
         if(mApiService.getFavouriteNeighbourList().contains(neighbour)){
             FavBtn.setColorFilter(getResources().getColor(R.color.FavColor));
@@ -89,8 +99,7 @@ public class UserDetailActivity extends AppCompatActivity {
 
         });
 
-        String UserSocials = getString(R.string.facebook_url, neighbour.getName());
-        socials.setText(UserSocials);
+
 
 
     }

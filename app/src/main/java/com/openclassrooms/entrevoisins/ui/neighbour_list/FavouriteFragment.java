@@ -3,6 +3,7 @@ package com.openclassrooms.entrevoisins.ui.neighbour_list;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -29,7 +30,7 @@ public class FavouriteFragment extends Fragment implements MyNeighbourRecyclerVi
     private NeighbourApiService mApiService;
     private List<Neighbour> mNeighbours;
     private RecyclerView mRecyclerView;
-
+    private ImageButton mDeleteFav;
 
 
 
@@ -52,13 +53,15 @@ public class FavouriteFragment extends Fragment implements MyNeighbourRecyclerVi
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_favourite, container, false);
+        View view = inflater.inflate(R.layout.fragment_neighbour_list, container, false);
         Context context = view.getContext();
         mRecyclerView = (RecyclerView) view;
         mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
         return view;
     }
+
+
 
     private void initList() {
         mNeighbours = mApiService.getFavouriteNeighbourList();
@@ -67,15 +70,15 @@ public class FavouriteFragment extends Fragment implements MyNeighbourRecyclerVi
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        initList();
-    }
-
-    @Override
     public void onStart() {
         super.onStart();
         EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        initList();
     }
 
     @Override
@@ -102,13 +105,14 @@ public class FavouriteFragment extends Fragment implements MyNeighbourRecyclerVi
     }
 
     @Override
-    public void removeFavNeighbour(int position) {
+    public void onFavClick(int position) {
+
         mApiService.removeFavNeighbour(mNeighbours.get(position));
 
     }
 
     @Override
-    public void deleteNeighbour(int position) {
+    public void onTrashcanClick(int position) {
 
     }
 }

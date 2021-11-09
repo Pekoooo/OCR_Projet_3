@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -30,6 +31,7 @@ public class NeighbourFragment extends Fragment implements MyNeighbourRecyclerVi
     private NeighbourApiService mApiService;
     private List<Neighbour> mNeighbours;
     private RecyclerView mRecyclerView;
+
 
 
     /**
@@ -78,8 +80,6 @@ public class NeighbourFragment extends Fragment implements MyNeighbourRecyclerVi
         initList();
     }
 
-
-
     @Override
     public void onStop() {
         super.onStop();
@@ -108,12 +108,12 @@ public class NeighbourFragment extends Fragment implements MyNeighbourRecyclerVi
     }
 
     @Override
-    public void removeFavNeighbour(int position) {
+    public void onFavClick(int position) {
 
     }
 
     @Override
-    public void deleteNeighbour(int position) {
+    public void onTrashcanClick(int position) {
 
         mApiService.deleteNeighbour(mNeighbours.get(position));
 

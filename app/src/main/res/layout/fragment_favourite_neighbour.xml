@@ -29,14 +29,14 @@
         app:layout_constraintTop_toTopOf="@+id/item_list_avatar_fav" />
 
     <ImageButton
-        android:id="@+id/item_list_fav_button"
+        android:id="@+id/item_list_favourite_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:background="@null"
-        app:layout_constraintBottom_toBottomOf="@+id/item_list_name_fav"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/item_list_name_fav"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_baseline_star_gold" />
 
 </android.support.constraint.ConstraintLayout>

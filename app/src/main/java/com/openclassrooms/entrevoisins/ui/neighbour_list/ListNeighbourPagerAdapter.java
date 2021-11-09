@@ -30,6 +30,7 @@ public class ListNeighbourPagerAdapter extends FragmentPagerAdapter {
         }
     }
 
+
     /**
      * get the number of pages
      * @return

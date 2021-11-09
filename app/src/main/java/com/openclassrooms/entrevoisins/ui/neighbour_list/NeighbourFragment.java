@@ -1,5 +1,7 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +19,7 @@ import android.view.ViewGroup;
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
+import com.openclassrooms.entrevoisins.events.RemoveFavNeighbourEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.service.DummyNeighbourGenerator;
 import com.openclassrooms.entrevoisins.service.NeighbourApiService;
@@ -32,8 +36,6 @@ public class NeighbourFragment extends Fragment implements MyNeighbourRecyclerVi
     private List<Neighbour> mNeighbours;
     private RecyclerView mRecyclerView;
 
-
-
     /**
      * Create and return a new instance
      * @return @{@link NeighbourFragment}
@@ -42,11 +44,13 @@ public class NeighbourFragment extends Fragment implements MyNeighbourRecyclerVi
         return new NeighbourFragment();
     }
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mApiService = DI.getNeighbourApiService();
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -59,13 +63,13 @@ public class NeighbourFragment extends Fragment implements MyNeighbourRecyclerVi
         return view;
     }
 
+
     /**
      * Init the List of neighbours
      */
     private void initList() {
         mNeighbours = mApiService.getNeighbours();
         mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours, this));
-
     }
 
     @Override
@@ -92,7 +96,7 @@ public class NeighbourFragment extends Fragment implements MyNeighbourRecyclerVi
       */
      @Subscribe
      public void onDeleteNeighbour(DeleteNeighbourEvent event) {
-
+         Log.d(TAG, "onDeleteNeighbour: is called");
          mApiService.deleteNeighbour(event.neighbour);
          initList();
      }
@@ -107,16 +111,4 @@ public class NeighbourFragment extends Fragment implements MyNeighbourRecyclerVi
 
     }
 
-    @Override
-    public void onFavClick(int position) {
-
-    }
-
-    @Override
-    public void onTrashcanClick(int position) {
-
-        mApiService.deleteNeighbour(mNeighbours.get(position));
-
-
-    }
 }

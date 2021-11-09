@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
+import com.openclassrooms.entrevoisins.events.RemoveFavNeighbourEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 
@@ -31,16 +32,12 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
 
     private final List<Neighbour> mNeighbours;
     private final OnItemClickListener mOnItemClickListener;
-    private NeighbourApiService mApiService;
-    private ListNeighbourPagerAdapter mPagerAdapter;
-    private FragmentManager mFragmentManager;
 
 
     public interface OnItemClickListener {
         void onItemClick(int position);
-        void onFavClick(int position);
-        void onTrashcanClick(int position);
     }
+
 
     public MyNeighbourRecyclerViewAdapter(List<Neighbour> items, OnItemClickListener onItemClickListener) {
         mNeighbours = items;
@@ -48,48 +45,18 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
 
     }
 
-   // @Override
-   // public int getItemViewType(int position) {
-//
-
-//
-//
-   //    return 1;
-   // }
-
-
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
-
-
        View view = LayoutInflater.from(parent.getContext())
                .inflate(R.layout.fragment_neighbour, parent, false);
        return new ViewHolder(view, mOnItemClickListener);
-
-
-  //  if(viewType == 0){
-
-  //      View view = LayoutInflater.from(parent.getContext())
-  //              .inflate(R.layout.fragment_neighbour, parent, false);
-  //      return new ViewHolder(view, mOnItemClickListener);
-
-  //  }
-
-  //      View view = LayoutInflater.from(parent.getContext())
-  //              .inflate(R.layout.fragment_favourite_neighbour, parent, false);
-  //      return new ViewHolder(view, mOnItemClickListener);
-
-
-
     }
+
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-
-        // Needs if statement for binding good layout regarding of the viewtype returned
 
         Neighbour neighbour = mNeighbours.get(position);
         holder.mNeighbourName.setText(neighbour.getName());
@@ -98,17 +65,25 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
                 .apply(RequestOptions.circleCropTransform())
                 .into(holder.mNeighbourAvatar);
 
-
-
          holder.mDeleteButton.setOnClickListener(new View.OnClickListener() {
              @Override
-             public void onClick(View v) {
+             public void onClick(View view) {
 
-                 EventBus.getDefault().post(new DeleteNeighbourEvent(neighbour));
+                 if(neighbour.isFavourite()){
+
+                     EventBus.getDefault().post(new RemoveFavNeighbourEvent(neighbour));
+
+                 } else {
+
+                     EventBus.getDefault().post(new RemoveFavNeighbourEvent(neighbour));
+                     EventBus.getDefault().post(new DeleteNeighbourEvent(neighbour));
+
+                 }
              }
          });
 
     }
+
 
     @Override
     public int getItemCount() {
@@ -124,13 +99,7 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
         @BindView(R.id.item_list_delete_button)
         public ImageButton mDeleteButton;
 
-
-
-
-
         OnItemClickListener mOnItemClickListener;
-
-
 
         // CONSTRUCTOR
         public ViewHolder(View view, OnItemClickListener mOnItemClickListener  ) {
@@ -139,7 +108,6 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
             itemView.setOnClickListener(this);
 
             this.mOnItemClickListener = mOnItemClickListener;
-
 
         }
 

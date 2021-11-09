@@ -14,11 +14,24 @@ public interface NeighbourApiService {
      * Get all my Neighbours
      * @return {@link List}
      */
+
     List<Neighbour> getNeighbours();
+
+    /**
+     * Get all the Neighbours from favourite list
+     */
 
     List<Neighbour> getFavouriteNeighbourList();
 
+    /**
+     * Puts the current neighbour in the favourite list
+     */
+
     void addFavNeighbour(Neighbour neighbour);
+
+    /**
+     * Removes the current neighbour from the favourite list
+     */
 
     void removeFavNeighbour(Neighbour neighbour);
 

@@ -33,18 +33,20 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
         return mFavouriteNeighbourList;
     }
 
+
     @Override
     public void addFavNeighbour(Neighbour neighbour) {
 
         mFavouriteNeighbourList.add(neighbour);
-
+        neighbour.setFavourite(true);
     }
+
 
     @Override
     public void removeFavNeighbour(Neighbour neighbour) {
 
         mFavouriteNeighbourList.remove(neighbour);
-
+        neighbour.setFavourite(false);
     }
 
 
@@ -55,6 +57,7 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
     public void deleteNeighbour(Neighbour neighbour) {
         neighbours.remove(neighbour);
     }
+
 
     /**
      * {@inheritDoc}

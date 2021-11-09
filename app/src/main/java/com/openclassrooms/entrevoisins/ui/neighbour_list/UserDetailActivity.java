@@ -55,22 +55,18 @@ public class UserDetailActivity extends AppCompatActivity {
             Neighbour neighbour = getIntent().getParcelableExtra("UserDetails");
 
             setDetails(neighbour);
-
-
+            setFavFab(neighbour);
         }
     }
 
 
-
     private void setDetails(Neighbour neighbour){
-
         ButterKnife.bind(this);
 
         Glide.with(this)
                 .asBitmap()
                 .load(neighbour.getAvatarUrl())
                 .into(image);
-
         username1.setText(neighbour.getName());
         username2.setText(neighbour.getName());
         position.setText(neighbour.getAddress());
@@ -80,6 +76,10 @@ public class UserDetailActivity extends AppCompatActivity {
         //Sets social media link with a placeholder :
         String UserSocials = getString(R.string.facebook_url, neighbour.getName());
         socials.setText(UserSocials);
+    }
+
+
+    private void setFavFab(Neighbour neighbour){
 
         if(mApiService.getFavouriteNeighbourList().contains(neighbour)){
             FavBtn.setColorFilter(getResources().getColor(R.color.FavColor));
@@ -98,9 +98,6 @@ public class UserDetailActivity extends AppCompatActivity {
             }
 
         });
-
-
-
 
     }
 }

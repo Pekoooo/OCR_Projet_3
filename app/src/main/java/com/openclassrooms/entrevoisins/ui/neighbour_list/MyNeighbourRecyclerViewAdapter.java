@@ -32,6 +32,7 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
 
     private final List<Neighbour> mNeighbours;
     private final OnItemClickListener mOnItemClickListener;
+    private boolean isFavourite;
 
 
     public interface OnItemClickListener {
@@ -39,9 +40,10 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
     }
 
 
-    public MyNeighbourRecyclerViewAdapter(List<Neighbour> items, OnItemClickListener onItemClickListener) {
+    public MyNeighbourRecyclerViewAdapter(List<Neighbour> items, OnItemClickListener onItemClickListener, boolean isFavourite) {
         mNeighbours = items;
         this.mOnItemClickListener = onItemClickListener;
+        this.isFavourite = isFavourite;
 
     }
 
@@ -57,7 +59,6 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-
         Neighbour neighbour = mNeighbours.get(position);
         holder.mNeighbourName.setText(neighbour.getName());
         Glide.with(holder.mNeighbourAvatar.getContext())
@@ -65,20 +66,23 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
                 .apply(RequestOptions.circleCropTransform())
                 .into(holder.mNeighbourAvatar);
 
+
+        if(isFavourite){
+            holder.mDeleteButton.setBackgroundResource(R.drawable.ic_baseline_star_gold);
+        } else {
+            holder.mDeleteButton.setBackgroundResource(R.drawable.ic_delete_white_24dp);
+        }
+
          holder.mDeleteButton.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View view) {
 
-                 if(neighbour.isFavourite()){
+                 if (!neighbour.isFavourite()) {
 
-                     EventBus.getDefault().post(new RemoveFavNeighbourEvent(neighbour));
-
-                 } else {
-
-                     EventBus.getDefault().post(new RemoveFavNeighbourEvent(neighbour));
                      EventBus.getDefault().post(new DeleteNeighbourEvent(neighbour));
 
                  }
+                 EventBus.getDefault().post(new RemoveFavNeighbourEvent(neighbour));
              }
          });
 

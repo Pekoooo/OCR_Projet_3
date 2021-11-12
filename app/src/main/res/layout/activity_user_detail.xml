@@ -18,7 +18,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/MainImageView"
         android:layout_marginEnd="16dp"
-        android:contentDescription="TODO"/>
+        android:contentDescription="@null"/>
 
     <ImageView
         android:id="@+id/MainImageView"
@@ -30,7 +30,7 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="TODO" />
+        android:contentDescription="@null" />
 
     <TextView
         android:id="@+id/on_picture_name"
@@ -102,7 +102,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.431"
-                android:contentDescription="TODO" />
+                android:contentDescription="@null" />
 
             <TextView
                 android:id="@+id/info_frame_cellphone"
@@ -128,7 +128,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.659"
-                android:contentDescription="TODO" />
+                android:contentDescription="@null" />
 
             <TextView
                 android:id="@+id/info_frame_socials"
@@ -154,7 +154,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.886"
-                android:contentDescription="TODO" />
+                android:contentDescription="@null" />
 
 
         </android.support.constraint.ConstraintLayout>

@@ -47,6 +47,10 @@ public class UserDetailActivity extends AppCompatActivity {
         mApiService = DI.getNeighbourApiService();
 
         getIncomingIntent();
+        if(getSupportActionBar() != null){
+            getSupportActionBar().setTitle("");
+        }
+
 
     }
 

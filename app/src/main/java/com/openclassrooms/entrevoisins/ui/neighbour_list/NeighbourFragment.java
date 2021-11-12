@@ -40,8 +40,15 @@ public class NeighbourFragment extends Fragment implements MyNeighbourRecyclerVi
      * Create and return a new instance
      * @return @{@link NeighbourFragment}
      */
-    public static NeighbourFragment newInstance() {
+    public static NeighbourFragment newInstance(int position) {
+
+
         return new NeighbourFragment();
+
+
+
+
+
     }
 
 
@@ -69,7 +76,7 @@ public class NeighbourFragment extends Fragment implements MyNeighbourRecyclerVi
      */
     private void initList() {
         mNeighbours = mApiService.getNeighbours();
-        mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours, this));
+        mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours, this, false));
     }
 
     @Override

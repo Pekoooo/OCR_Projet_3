@@ -9,10 +9,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Unit test on Neighbour service
@@ -35,9 +37,34 @@ public class NeighbourServiceTest {
     }
 
     @Test
+    public void getFavouriteNeighbourWithSuccess() {
+        List<Neighbour> favNeighbours = service.getFavouriteNeighbourList();
+        List<Neighbour> expectedNeighbours = new ArrayList<>();
+        assertThat(favNeighbours, IsIterableContainingInAnyOrder.containsInAnyOrder(expectedNeighbours.toArray()));
+    }
+
+    @Test
+    public void addFavouriteNeighbourWithSuccess() {
+        Neighbour neighbour = new Neighbour(121212,"JohnDoe", "avatarURL", "address","phone number", "about me" );
+        service.addFavNeighbour(neighbour);
+        assertTrue(service.getFavouriteNeighbourList().contains(neighbour));
+    }
+
+    @Test
     public void deleteNeighbourWithSuccess() {
         Neighbour neighbourToDelete = service.getNeighbours().get(0);
         service.deleteNeighbour(neighbourToDelete);
         assertFalse(service.getNeighbours().contains(neighbourToDelete));
     }
+
+    @Test
+    public void removeNeighbourFromFavouriteWithSuccess() {
+        Neighbour neighbourToRemove = new Neighbour(121212,"JohnDoe", "avatarURL", "address","phone number", "about me" );
+        service.addFavNeighbour(neighbourToRemove);
+        service.removeFavNeighbour(neighbourToRemove);
+        assertFalse(service.getFavouriteNeighbourList().contains(neighbourToRemove));
+
+    }
+
+
 }

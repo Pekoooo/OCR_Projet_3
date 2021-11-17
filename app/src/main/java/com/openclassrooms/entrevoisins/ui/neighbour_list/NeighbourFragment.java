@@ -32,24 +32,31 @@ import java.util.List;
 
 public class NeighbourFragment extends Fragment implements MyNeighbourRecyclerViewAdapter.OnItemClickListener {
 
-    private NeighbourApiService mApiService;
-    private List<Neighbour> mNeighbours;
-    private RecyclerView mRecyclerView;
+    private  NeighbourApiService mApiService;
+    private  List<Neighbour> mNeighbours;
+    private  RecyclerView mRecyclerView;
+    public static final String fragment_key = "position";
+    private int position;
 
     /**
      * Create and return a new instance
      * @return @{@link NeighbourFragment}
      */
+
     public static NeighbourFragment newInstance(int position) {
+        Log.d(TAG, "newInstance: is called");
 
+        // Sends a fragment with a bundle
+        Bundle arguments = new Bundle();
+        arguments.putInt(fragment_key, position);
+        NeighbourFragment fragment = new NeighbourFragment();
+        fragment.setArguments(arguments);
 
-        return new NeighbourFragment();
-
-
-
-
+        return fragment;
 
     }
+
+
 
 
     @Override
@@ -67,6 +74,8 @@ public class NeighbourFragment extends Fragment implements MyNeighbourRecyclerVi
         mRecyclerView = (RecyclerView) view;
         mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+        position = getArguments().getInt(fragment_key);
+        initList();
         return view;
     }
 
@@ -75,8 +84,16 @@ public class NeighbourFragment extends Fragment implements MyNeighbourRecyclerVi
      * Init the List of neighbours
      */
     private void initList() {
-        mNeighbours = mApiService.getNeighbours();
-        mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours, this, false));
+
+         if(position == 0){
+             mNeighbours = mApiService.getNeighbours();
+             mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours, this, false));
+         } else {
+             mNeighbours = mApiService.getFavouriteNeighbourList();
+             mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours, this, true));
+         }
+
+
     }
 
     @Override
@@ -103,10 +120,20 @@ public class NeighbourFragment extends Fragment implements MyNeighbourRecyclerVi
       */
      @Subscribe
      public void onDeleteNeighbour(DeleteNeighbourEvent event) {
-         Log.d(TAG, "onDeleteNeighbour: is called");
-         mApiService.deleteNeighbour(event.neighbour);
+
+            if(position == 0){
+                mApiService.deleteNeighbour(event.neighbour);
+            }
          initList();
      }
+
+    @Subscribe
+    public void onRemoveFavoriteNeighbour(RemoveFavNeighbourEvent event) {
+        if (position == 1) {
+            mApiService.removeFavNeighbour(event.neighbour);
+        }
+        initList();
+    }
 
     @Override
     public void onItemClick(int position) {

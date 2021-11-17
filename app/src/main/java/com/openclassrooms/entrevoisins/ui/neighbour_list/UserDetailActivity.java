@@ -37,6 +37,8 @@ public class UserDetailActivity extends AppCompatActivity {
     @BindView(R.id.fav_fab)
     public FloatingActionButton FavBtn;
 
+
+
     private NeighbourApiService mApiService;
 
     @Override

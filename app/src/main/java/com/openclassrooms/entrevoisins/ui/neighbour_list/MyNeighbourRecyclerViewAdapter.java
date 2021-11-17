@@ -32,7 +32,7 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
 
     private final List<Neighbour> mNeighbours;
     private final OnItemClickListener mOnItemClickListener;
-    private boolean isFavourite;
+    private final boolean isFavourite;
 
 
     public interface OnItemClickListener {
@@ -67,12 +67,17 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
                 .into(holder.mNeighbourAvatar);
 
 
+
+        // Changes icon for deleting row from the list depending on the current tab.
+
         if(isFavourite){
             holder.mDeleteButton.setBackgroundResource(R.drawable.ic_baseline_star_gold);
         } else {
             holder.mDeleteButton.setBackgroundResource(R.drawable.ic_delete_white_24dp);
         }
 
+
+         // Changes event posted behind after delete button click depending on the current tab.
          holder.mDeleteButton.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View view) {
@@ -80,8 +85,8 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
                  if (!neighbour.isFavourite()) {
 
                      EventBus.getDefault().post(new DeleteNeighbourEvent(neighbour));
-
                  }
+
                  EventBus.getDefault().post(new RemoveFavNeighbourEvent(neighbour));
              }
          });
@@ -105,7 +110,7 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
 
         OnItemClickListener mOnItemClickListener;
 
-        // CONSTRUCTOR
+
         public ViewHolder(View view, OnItemClickListener mOnItemClickListener  ) {
             super(view);
             ButterKnife.bind(this, view);

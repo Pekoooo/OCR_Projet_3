@@ -1,16 +1,19 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.util.Log;
 
 
 public class ListNeighbourPagerAdapter extends FragmentPagerAdapter {
 
+    private static final String TAG = "PagerAdapter";
+
     public ListNeighbourPagerAdapter(FragmentManager fm) {
         super(fm);
     }
-
 
     /**
      * getItem is called to instantiate the fragment for the given page.
@@ -19,17 +22,12 @@ public class ListNeighbourPagerAdapter extends FragmentPagerAdapter {
      */
     @Override
     public Fragment getItem(int position) {
-        switch (position) {
-            case 0 :
-                return new NeighbourFragment();
-            case 1 :
-                return new FavouriteFragment();
 
-            default:
-                return null;
+        Log.d(TAG, "getItem: is called");
+
+        return NeighbourFragment.newInstance(position);
+
         }
-    }
-
 
     /**
      * get the number of pages
@@ -37,6 +35,7 @@ public class ListNeighbourPagerAdapter extends FragmentPagerAdapter {
      */
     @Override
     public int getCount() {
+        Log.d(TAG, "getCount: is called");
         return 2;
     }
 }

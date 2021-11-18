@@ -69,6 +69,7 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
 
 
         // Changes icon for deleting row from the list depending on the current tab.
+        // This isFavourite = constructor isFavourite =/= Neighbour isFavourite
 
         if(isFavourite){
             holder.mDeleteButton.setBackgroundResource(R.drawable.ic_baseline_star_gold);

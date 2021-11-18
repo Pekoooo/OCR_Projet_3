@@ -25,6 +25,8 @@ public class ListNeighbourPagerAdapter extends FragmentPagerAdapter {
 
         Log.d(TAG, "getItem: is called");
 
+        // Position is passed through newInstance(position) from getItem(int position)
+
         return NeighbourFragment.newInstance(position);
 
         }

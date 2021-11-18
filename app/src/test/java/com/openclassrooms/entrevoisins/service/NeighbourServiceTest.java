@@ -16,6 +16,8 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
+import android.support.annotation.NonNull;
+
 /**
  * Unit test on Neighbour service
  */
@@ -30,35 +32,28 @@ public class NeighbourServiceTest {
     }
 
     @Test
-    public void getNeighboursWithSuccess() {
+    public void neighbourApiService_getNeighbours_withSuccess() {
         List<Neighbour> neighbours = service.getNeighbours();
         List<Neighbour> expectedNeighbours = DummyNeighbourGenerator.DUMMY_NEIGHBOURS;
         assertThat(neighbours, IsIterableContainingInAnyOrder.containsInAnyOrder(expectedNeighbours.toArray()));
     }
 
     @Test
-    public void getFavouriteNeighbourWithSuccess() {
-        List<Neighbour> favNeighbours = service.getFavouriteNeighbourList();
-        List<Neighbour> expectedNeighbours = new ArrayList<>();
-        assertThat(favNeighbours, IsIterableContainingInAnyOrder.containsInAnyOrder(expectedNeighbours.toArray()));
-    }
-
-    @Test
-    public void addFavouriteNeighbourWithSuccess() {
+    public void neighbourApiService_addFavouriteNeighbour_withSuccess() {
         Neighbour neighbour = new Neighbour(121212,"JohnDoe", "avatarURL", "address","phone number", "about me" );
         service.addFavNeighbour(neighbour);
         assertTrue(service.getFavouriteNeighbourList().contains(neighbour));
     }
 
     @Test
-    public void deleteNeighbourWithSuccess() {
+    public void neighbourApiService_deleteNeighbour_withSuccess() {
         Neighbour neighbourToDelete = service.getNeighbours().get(0);
         service.deleteNeighbour(neighbourToDelete);
         assertFalse(service.getNeighbours().contains(neighbourToDelete));
     }
 
     @Test
-    public void removeNeighbourFromFavouriteWithSuccess() {
+    public void neighbourApiService_removeNeighbourFromFavourite_withSuccess() {
         Neighbour neighbourToRemove = new Neighbour(121212,"JohnDoe", "avatarURL", "address","phone number", "about me" );
         service.addFavNeighbour(neighbourToRemove);
         service.removeFavNeighbour(neighbourToRemove);

@@ -5,8 +5,6 @@ import static android.content.ContentValues.TAG;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,7 +19,6 @@ import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
 import com.openclassrooms.entrevoisins.events.RemoveFavNeighbourEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
-import com.openclassrooms.entrevoisins.service.DummyNeighbourGenerator;
 import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 
 import org.greenrobot.eventbus.EventBus;
@@ -47,24 +44,21 @@ public class NeighbourFragment extends Fragment implements MyNeighbourRecyclerVi
         Log.d(TAG, "newInstance: is called");
 
         // Sends a fragment with a bundle
-        Bundle arguments = new Bundle();
-        arguments.putInt(fragment_key, position);
+        Bundle bundle = new Bundle();
+        bundle.putInt(fragment_key, position);
         NeighbourFragment fragment = new NeighbourFragment();
-        fragment.setArguments(arguments);
+        fragment.setArguments(bundle);
+
 
         return fragment;
 
     }
-
-
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mApiService = DI.getNeighbourApiService();
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -85,14 +79,11 @@ public class NeighbourFragment extends Fragment implements MyNeighbourRecyclerVi
      */
     private void initList() {
 
-         if(position == 0){
-             mNeighbours = mApiService.getNeighbours();
-             mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours, this, false));
-         } else {
-             mNeighbours = mApiService.getFavouriteNeighbourList();
-             mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours, this, true));
-         }
+        mNeighbours = position == 0 ? mApiService.getNeighbours() : mApiService.getFavouriteNeighbourList();
 
+        mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours, this, position == 1));
+                                                                                                      //Reminder : isFavourite ONLY if position == 1
+                                                                                                        //if not 0 = isFavourite == false
 
     }
 

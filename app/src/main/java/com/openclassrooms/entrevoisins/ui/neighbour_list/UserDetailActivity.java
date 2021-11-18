@@ -49,6 +49,8 @@ public class UserDetailActivity extends AppCompatActivity {
         mApiService = DI.getNeighbourApiService();
 
         getIncomingIntent();
+
+        //Removes the name of the app in actionbar
         if(getSupportActionBar() != null){
             getSupportActionBar().setTitle("");
         }

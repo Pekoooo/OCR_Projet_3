@@ -89,22 +89,21 @@ public class UserDetailActivity extends AppCompatActivity {
 
     private void setFavFab(Neighbour neighbour){
 
-        if(mApiService.getFavouriteNeighbourList().contains(neighbour)){
-            FavBtn.setColorFilter(getResources().getColor(R.color.FavColor));
-        } else {
-            FavBtn.setColorFilter(getResources().getColor(R.color.NotFavColor));
-        }
+        // Sets color on detail view opening
+        FavBtn.setColorFilter(mApiService.getFavouriteNeighbourList().contains(neighbour) ? getResources().getColor(R.color.FavColor) :
+                                                                                            getResources().getColor(R.color.NotFavColor));
 
-
+        // Handles logic behind click
         FavBtn.setOnClickListener(view -> {
+
             if(!mApiService.getFavouriteNeighbourList().contains(neighbour)){
                 mApiService.addFavNeighbour(neighbour);
-                FavBtn.setColorFilter(getResources().getColor(R.color.FavColor));
             } else {
                 mApiService.removeFavNeighbour(neighbour);
-                FavBtn.setColorFilter(getResources().getColor(R.color.NotFavColor));
             }
 
+            FavBtn.setColorFilter(getResources().getColor(!mApiService.getFavouriteNeighbourList().contains(neighbour) ? R.color.FavColor :
+                                                                                                                         R.color.NotFavColor));
         });
 
     }

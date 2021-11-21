@@ -84,7 +84,6 @@ public class NeighbourFragment extends Fragment implements MyNeighbourRecyclerVi
         mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours, this, position == 1));
                                                                                                       //Reminder : isFavourite ONLY if position == 1
                                                                                                         //if not 0 = isFavourite == false
-
     }
 
     @Override
@@ -109,20 +108,19 @@ public class NeighbourFragment extends Fragment implements MyNeighbourRecyclerVi
       * Fired if the user clicks on a delete button
       * @param event
       */
+
+     // Code fired when Delete or Remove is clicked
      @Subscribe
      public void onDeleteNeighbour(DeleteNeighbourEvent event) {
 
-            if(position == 0){
-                mApiService.deleteNeighbour(event.neighbour);
-            }
+         mApiService.deleteNeighbour(event.neighbour);
          initList();
      }
 
     @Subscribe
     public void onRemoveFavoriteNeighbour(RemoveFavNeighbourEvent event) {
-        if (position == 1) {
-            mApiService.removeFavNeighbour(event.neighbour);
-        }
+
+         mApiService.removeFavNeighbour(event.neighbour);
         initList();
     }
 

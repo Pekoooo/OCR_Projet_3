@@ -1,11 +1,7 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
-import static android.content.ContentValues.TAG;
-
 import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +15,6 @@ import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
 import com.openclassrooms.entrevoisins.events.RemoveFavNeighbourEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
-import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -66,31 +61,13 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
                 .apply(RequestOptions.circleCropTransform())
                 .into(holder.mNeighbourAvatar);
 
+        holder.mDeleteButton.setBackgroundResource(isFavourite ? R.drawable.ic_baseline_star_gold :
+                                                                 R.drawable.ic_delete_white_24dp);
 
+        holder.mDeleteButton.setOnClickListener(view ->
 
-        // Changes icon for deleting row from the list depending on the current tab.
-        // This isFavourite = constructor isFavourite =/= Neighbour isFavourite
-
-        if(isFavourite){
-            holder.mDeleteButton.setBackgroundResource(R.drawable.ic_baseline_star_gold);
-        } else {
-            holder.mDeleteButton.setBackgroundResource(R.drawable.ic_delete_white_24dp);
-        }
-
-
-         // Changes event posted behind after delete button click depending on the current tab.
-         holder.mDeleteButton.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View view) {
-
-                 if (!neighbour.isFavourite()) {
-
-                     EventBus.getDefault().post(new DeleteNeighbourEvent(neighbour));
-                 }
-
-                 EventBus.getDefault().post(new RemoveFavNeighbourEvent(neighbour));
-             }
-         });
+                EventBus.getDefault().post((!neighbour.isFavourite()) ? new DeleteNeighbourEvent(neighbour) :
+                                                                        new RemoveFavNeighbourEvent(neighbour)));
 
     }
 
